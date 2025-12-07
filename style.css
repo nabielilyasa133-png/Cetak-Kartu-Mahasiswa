@@ -1,0 +1,220 @@
+/* --- FILE: style.css --- */
+
+/* Import Font ala Coding */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+:root {
+    --neon: #00ff55;      /* Warna Hijau Hacker */
+    --bg: #000000;        /* Hitam Pekat */
+    --glow: 0 0 10px var(--neon);
+    --dim: rgba(0, 255, 85, 0.1);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--neon);
+    font-family: 'Courier Prime', monospace;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* --- LAYAR MENU UTAMA --- */
+#menu-screen {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid var(--neon); /* Border tipis pembungkus menu */
+    box-shadow: var(--glow);
+}
+
+.terminal-header {
+    border-bottom: 2px solid var(--neon);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 5px var(--neon);
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    padding: 15px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+/* Efek Hover di Menu */
+.menu-item:hover {
+    border: 1px solid var(--neon);
+    background-color: var(--dim);
+    box-shadow: 0 0 10px var(--neon);
+    transform: translateX(10px);
+}
+
+.menu-item::before { content: "> "; }
+.menu-item:hover::before { content: ">> "; }
+
+/* --- LAYAR KARTU (Hidden by default) --- */
+#card-screen {
+    display: none; /* Disembunyikan awal */
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Desain Fisik Kartu */
+.id-card {
+    border: 2px solid var(--neon);
+    box-shadow: 0 0 20px var(--neon);
+    padding: 25px;
+    /* Efek Garis-garis Monitor Jadul (Scanline) */
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 255, 85, 0.05) 50%
+    );
+    background-size: 100% 4px;
+    margin-bottom: 20px;
+    position: relative;
+    background-color: #050505;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--neon);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px var(--neon);
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.data-list {
+    line-height: 1.8;
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.label {
+    font-weight: bold;
+    display: inline-block;
+    width: 140px;
+}
+
+/* Bingkai Foto */
+.photo-frame {
+    width: 120px;
+    height: 120px;
+    border: 2px solid var(--neon);
+    padding: 3px;
+    box-shadow: 0 0 10px var(--neon);
+    margin-left: 15px;
+    flex-shrink: 0;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Filter Canggih: Membuat foto jadi hijau monokrom */
+    filter: grayscale(100%) brightness(0.8) sepia(100%) hue-rotate(50deg) saturate(500%) contrast(1.2);
+}
+
+/* Prompt Terminal */
+.prompt-line {
+    margin-bottom: 15px;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* Kursor Kedip-kedip */
+.cursor {
+    display: inline-block;
+    width: 10px;
+    height: 18px;
+    background: var(--neon);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+
+/* Tombol Navigasi */
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn {
+    background: black;
+    color: var(--neon);
+    border: 1px solid var(--neon);
+    padding: 12px 24px;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: var(--neon);
+    color: black;
+    box-shadow: 0 0 20px var(--neon);
+}
+
+/* Animasi Keyframes */
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- MODE CETAK (PRINT) --- */
+@media print {
+    /* Sembunyikan menu dan tombol saat nge-print */
+    #menu-screen, .controls { display: none !important; }
+    
+    /* Tampilkan kartu */
+    #card-screen { 
+        display: block !important; 
+        width: 100%;
+        margin: 0; padding: 0;
+    }
+
+    body { 
+        background: white; 
+        padding: 0;
+        display: block;
+    }
+
+    .id-card { 
+        background: black !important; 
+        color: #00ff55 !important; 
+        border: 2px solid #00ff55 !important;
+        box-shadow: none; /* Hilangkan glow biar tinta irit/bersih */
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Pastikan gambar tetap terlihat hijau di PDF */
+    .photo-frame img { 
+        filter: grayscale(100%) sepia(100%) hue-rotate(50deg) saturate(500%) !important; 
+    }
+}
