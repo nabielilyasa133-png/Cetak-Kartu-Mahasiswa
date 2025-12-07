@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Mahasiswa - Secure Access</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="menu-screen">
+        <div class="terminal-header">
+            <h2>// SECURE DATABASE ACCESS</h2>
+            <small>System Ready. Select Target Identity:</small>
+        </div>
+
+        <ul class="menu-list">
+            <li class="menu-item" onclick="loadProfile('nabiel')">
+                [1] Access Profile: NABIEL ILYASA
+            </li>
+            <li class="menu-item" onclick="loadProfile('alfi')">
+                [2] Access Profile: ALFI HIDAYAT
+            </li>
+        </ul>
+        
+        <div style="margin-top: 50px;">
+            root@kali:~/database# <span class="cursor"></span>
+        </div>
+    </div>
+
+    <div id="card-screen">
+        <div class="id-card">
+            <div class="card-header">KARTU TANDA MAHASISWA — TERMINAL MODE</div>
+            
+            <div class="prompt-line">
+                <span id="cmd-text">root@kali:~/students# cat user_data.txt</span>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="data-list">
+                    <div><span class="label">NAMA</span>: <span id="data-name"></span></div>
+                    <div><span class="label">DOMISILI</span>: <span id="data-home"></span></div>
+                    <div><span class="label">NIM</span>: <span id="data-nim"></span></div>
+                    <div><span class="label">PROGRAM STUDI</span>: <span id="data-prodi"></span></div>
+                    <div style="margin-top: 15px; opacity: 0.7;">// STATUS: <span style="background:#00ff55; color:black; padding:0 4px;">ACTIVE</span></div>
+                </div>
+
+                <div class="photo-frame">
+                    <img id="data-photo" src="" alt="Profile Photo">
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                root@kali:~/students# <span class="cursor"></span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="goBack()">cd .. (Back)</button>
+            <button class="btn" onclick="window.print()">[ Print Card ]</button>
+        </div>
+    </div>
+
+    <script>
+        // Data Mahasiswa
+        const database = {
+            nabiel: {
+                name: "Nabiel Ilyasa Pradana",
+                home: "Semarang",
+                nim: "32602300046",
+                prodi: "Cyber Security",
+                file: "student_nabiel.txt",
+                photo: "https://placehold.co/120x120/000000/00ff55?text=NABIEL"
+            },
+            alfi: {
+                name: "Alfi Hidayat",
+                home: "Kalimantan",
+                nim: "32602300063",
+                prodi: "IoT Dev",
+                file: "student_alfi.txt",
+                photo: "https://placehold.co/120x120/000000/00ff55?text=ALFI"
+            }
+        };
+
+        // Element Referensi
+        const menuScreen = document.getElementById('menu-screen');
+        const cardScreen = document.getElementById('card-screen');
+        
+        const elName = document.getElementById('data-name');
+        const elHome = document.getElementById('data-home');
+        const elNim = document.getElementById('data-nim');
+        const elProdi = document.getElementById('data-prodi');
+        const elPhoto = document.getElementById('data-photo');
+        const elCmd = document.getElementById('cmd-text');
+
+        // Fungsi Load Profile
+        function loadProfile(userKey) {
+            const data = database[userKey];
+            
+            // Isi data ke HTML
+            elName.innerText = data.name;
+            elHome.innerText = data.home;
+            elNim.innerText = data.nim;
+            elProdi.innerText = data.prodi;
+            elPhoto.src = data.photo;
+            elCmd.innerText = root@kali:~/students# cat ${data.file};
+
+            // Efek transisi (Membutuhkan CSS .id-card untuk display block/none)
+            menuScreen.style.display = 'none';
+            cardScreen.style.display = 'block';
+        }
+
+        // Fungsi Kembali
+        function goBack() {
+            cardScreen.style.display = 'none';
+            menuScreen.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
